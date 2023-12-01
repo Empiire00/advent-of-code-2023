@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${workspaceFolder}/src:${PYTHONPATH}"
+    },
+    "python.analysis.autoImportCompletions": true
+}
