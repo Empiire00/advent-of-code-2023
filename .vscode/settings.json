@@ -2,5 +2,12 @@
     "terminal.integrated.env.osx": {
         "PYTHONPATH": "${workspaceFolder}/src:${PYTHONPATH}"
     },
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/src:${PYTHONPATH}",
+    },
+    "python.envFile": "${workspaceFolder}/.env",
     "python.analysis.autoImportCompletions": true
 }
