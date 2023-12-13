@@ -27,14 +27,14 @@ def part_1(inp: list[str]):
     digits = list(map(lambda line: get_digits(line), inp))
     numbers = list(map(lambda d: get_number(d[0], d[-1]), digits))
     solution = sum(numbers)
-    print(f'Solution part : {solution}')
+    print(f'Part 1: {solution}')
 
 
 def part_2(inp: list[str]):
     digits = list(map(lambda line: get_digits_part_2(line), inp))
     numbers = list(map(lambda d: get_number(d[0], d[-1]), digits))
     solution = sum(numbers)
-    print(f'Solution part 2: {solution}')
+    print(f'Part 2: {solution}')
 
 
 def get_number(*digits: int | str) -> int:
@@ -43,7 +43,7 @@ def get_number(*digits: int | str) -> int:
 
 
 def is_digit(to_test: str) -> bool:
-    return re.match("(\d)", to_test) is not None
+    return re.match(r"(\d)", to_test) is not None
 
 
 def get_digits(line: str) -> list[int]:

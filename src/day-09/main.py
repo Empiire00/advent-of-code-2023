@@ -1,3 +1,4 @@
+from typing import Any
 import util.input as input
 import os.path as path
 
@@ -18,7 +19,7 @@ def part_1(inp: list[str]):
     print(f"Part 1: {sum(predictions)}")
 
 
-def part_2(inp: str):
+def part_2(inp: list[str]):
     predictions: list[int] = []
     for line in inp:
         differences = calculate_differences(line)
@@ -29,7 +30,7 @@ def part_2(inp: str):
 
 def calculate_differences(line: str):
     values: list[int] = list(map(int, line.split(" ")))
-    differences: list[list[int]] = [values.copy()]
+    differences: list[list[Any]] = [values.copy()]
     index: int = 1
     while True:
         differences.append([None]*(len(differences[index - 1]) - 1))

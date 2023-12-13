@@ -84,7 +84,8 @@ def parse_game_string(game_string: str) -> Game:
 
 # returns id and games for that id
 def parse_line(line: str) -> tuple[int, list[str]]:
-    matches: re.Match[str] = re.match(r"Game\s(\d+): (.+)", line)
+    matches = re.match(r"Game\s(\d+): (.+)", line)
+    assert (matches is not None)
     id = int(matches.group(1))
     games = matches.group(2)
     games = list(map(lambda x: x.strip(), games.strip().split(";")))

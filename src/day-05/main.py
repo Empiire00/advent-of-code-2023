@@ -54,20 +54,17 @@ def get_conversion_dict(conversion_str: str) -> ConversionDict:
 
 
 def get_conversion_dicts(inp: str) -> list[ConversionDict]:
-    seed_to_soil_str = re.search(
-        r"seed-to-soil map:\n([\s\d]+)\n\n", inp).group(1)
-    soil_to_fert_str = re.search(
-        r"soil-to-fertilizer map:\n([\s\d]+)\n\n", inp).group(1)
-    fert_to_water_str = re.search(
-        r"fertilizer-to-water map:\n([\s\d]+)\n\n", inp).group(1)
-    water_to_light_str = re.search(
-        r"water-to-light map:\n([\s\d]+)\n\n", inp).group(1)
-    light_to_temp_str = re.search(
-        r"light-to-temperature map:\n([\s\d]+)\n\n", inp).group(1)
-    temp_to_humid_str = re.search(
-        r"temperature-to-humidity map:\n([\s\d]+)\n\n", inp).group(1)
-    humid_to_loc_str = re.search(
-        r"humidity-to-location map:\n([\s\d]+)", inp).group(1)
+    def __get_s(regex: str):
+        matches = re.search(regex, inp)
+        assert (matches is not None)
+        return matches.group(1)
+    seed_to_soil_str = __get_s(r"seed-to-soil map:\n([\s\d]+)\n\n")
+    soil_to_fert_str = __get_s(r"soil-to-fertilizer map:\n([\s\d]+)\n\n")
+    fert_to_water_str = __get_s(r"fertilizer-to-water map:\n([\s\d]+)\n\n")
+    water_to_light_str = __get_s(r"water-to-light map:\n([\s\d]+)\n\n")
+    light_to_temp_str = __get_s(r"light-to-temperature map:\n([\s\d]+)\n\n")
+    temp_to_humid_str = __get_s(r"temperature-to-humidity map:\n([\s\d]+)\n\n")
+    humid_to_loc_str = __get_s(r"humidity-to-location map:\n([\s\d]+)")
 
     seed_to_soil = get_conversion_dict(seed_to_soil_str)
     soil_to_fert = get_conversion_dict(soil_to_fert_str)
@@ -86,7 +83,7 @@ def get_conversion_dicts(inp: str) -> list[ConversionDict]:
     return conversions
 
 
-def chain_conversions(input: int, dicts: ConversionDict) -> int:
+def chain_conversions(input: int, dicts: list[ConversionDict]) -> int:
     curr: int = input
     for d in dicts:
         curr = d.get(curr)
@@ -94,7 +91,9 @@ def chain_conversions(input: int, dicts: ConversionDict) -> int:
 
 
 def part_1(inp: str):
-    seeds_str = re.search(r"seeds:\s([\d\s]+)", inp).group(1).strip()
+    seed_matches = re.search(r"seeds:\s([\d\s]+)", inp)
+    assert (seed_matches is not None)
+    seeds_str = seed_matches.group(1).strip()
     seeds = [int(x) for x in seeds_str.split()]
     seed_locations = []
     conversions = get_conversion_dicts(inp)
@@ -105,12 +104,14 @@ def part_1(inp: str):
 
 
 def part_2(inp: str):
-    seeds_str = re.search(r"seeds:\s([\d\s]+)", inp).group(1).strip()
+    seed_matches = re.search(r"seeds:\s([\d\s]+)", inp)
+    assert (seed_matches is not None)
+    seeds_str = seed_matches.group(1).strip()
     seed_ranges = [range(int(start), int(start)+int(length))
                    for (start, length) in zip(seeds_str.split()[0::2], seeds_str.split()[1::2])]
 
     conversions = get_conversion_dicts(inp)
-    min_loc: int = math.inf
+    min_loc = math.inf
     print("Starting to brute-force part 2. This is going to take a while...")
     print("You might want to get a coffee or some tea\n")
     with tqdm(desc="Main loop (seed ranges)", total=len(seed_ranges)) as pbar_main:

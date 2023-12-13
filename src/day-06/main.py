@@ -11,8 +11,7 @@ def main():
 
 
 def part_1(inp: str):
-    times_str = re.search(r"Time:[\s\t]+(.+)\n", inp).group(1)
-    distances_str = re.search(r"Distance:[\s\t]+(.+)", inp).group(1)
+    times_str, distances_str = parse_input(inp)
     times = re.sub(r"\s+", " ", times_str).split(" ")
     distances = re.sub(r"\s+", " ", distances_str).split(" ")
 
@@ -28,8 +27,7 @@ def part_1(inp: str):
 
 
 def part_2(inp: str):
-    times_str = re.search(r"Time:[\s\t]+(.+)\n", inp).group(1)
-    distances_str = re.search(r"Distance:[\s\t]+(.+)", inp).group(1)
+    times_str, distances_str = parse_input(inp)
     times = re.sub(r"\s+", "", times_str).split(" ")
     distances = re.sub(r"\s+", "", distances_str).split(" ")
 
@@ -48,6 +46,15 @@ def calculate_distance(holding_time: int, time: int) -> int:
     speed = holding_time
     acceleration_time = time - holding_time
     return acceleration_time * speed
+
+
+def parse_input(inp: str):
+    times_match = re.search(r"Time:[\s\t]+(.+)\n", inp)
+    distances_match = re.search(r"Distance:[\s\t]+(.+)", inp)
+    assert (times_match is not None and distances_match is not None)
+    times_str = times_match.group(1)
+    distances_str = distances_match.group(1)
+    return times_str, distances_str
 
 
 if __name__ == "__main__":

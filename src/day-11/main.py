@@ -32,7 +32,7 @@ def part_1(inp: list[str]):
     print(f"Part 1: {overall_sum}")
 
 
-def part_2(inp: str):
+def part_2(inp: list[str]):
     galaxy_positions, empty_cols, empty_rows = parse_input(inp)
 
     # sort by y-coordinate to ease up permutations

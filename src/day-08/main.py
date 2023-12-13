@@ -16,7 +16,7 @@ def part_1(inp: list[str]):
     START = "AAA"
     END = "ZZZ"
     move_strings = inp[2::]
-    move_set: tuple[str, str] = {}
+    move_set: dict[str, tuple[str, str]] = {}
     for move_str in move_strings:
         [source, choices] = list(map(str.strip, move_str.split("=")))
         choices = re.sub(r"[()]", "", choices)
@@ -29,19 +29,19 @@ def part_1(inp: list[str]):
     while not arrived:
         next_move = move_instructions[steps % len(move_instructions)]
         if next_move == "L":
-            curr_pos = move_set.get(curr_pos)[0]
+            curr_pos = move_set[curr_pos][0]
         elif next_move == "R":
-            curr_pos = move_set.get(curr_pos)[1]
+            curr_pos = move_set[curr_pos][1]
         steps += 1
         arrived = curr_pos == END
 
     print(f"Part 1: {steps}")
 
 
-def part_2(inp: str):
+def part_2(inp: list[str]):
     move_instructions = inp[0]
     move_strings = inp[2::]
-    move_set: dict[str, str] = {}
+    move_set: dict[str, tuple[str, str]] = {}
     starts: list[str] = []
     ends: list[str] = []
     for move_str in move_strings:
@@ -63,9 +63,9 @@ def part_2(inp: str):
         while not arrived:
             next_move = move_instructions[steps % len(move_instructions)]
             if next_move == "L":
-                curr_pos = move_set.get(curr_pos)[0]
+                curr_pos = move_set[curr_pos][0]
             elif next_move == "R":
-                curr_pos = move_set.get(curr_pos)[1]
+                curr_pos = move_set[curr_pos][1]
             arrived = ends.count(curr_pos) == 1
             steps += 1
         steps_arr.append(steps)
