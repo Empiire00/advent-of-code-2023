@@ -9,5 +9,8 @@
         "PYTHONPATH": "${workspaceFolder}/src:${PYTHONPATH}",
     },
     "python.envFile": "${workspaceFolder}/.env",
-    "python.analysis.autoImportCompletions": true
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.inlayHints.functionReturnTypes": true
 }
